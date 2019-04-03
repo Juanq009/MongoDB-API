@@ -16,14 +16,19 @@ namespace WebApiMongoDB.Models
         public IEnumerable<Personas> Todos()
 
         {
-            var persona = _database.GetCollection<Personas>("Personas").Find(new BsonDocument()).ToListAsync();
+            var persona = _database.GetCollection<Personas>("Personas")
+            .Find(new BsonDocument()).ToListAsync();
             return persona.Result;
         }
-        // public IEnumerable<Personas> BuscarPorId(string id)
-        // {
-        //     var person = _database.GetCollection<Personas>("Personas").Find(new BsonDocument()).ToString();
+        // no esta andando devuelve []
 
-        // }
+        public IEnumerable<Personas> Uno(string name)
+        {
+            var persona = _database.GetCollection<Personas>("Personas")
+            .Find(d => d.Nombre == name).ToListAsync();
+            return persona.Result;
+        }
+
         private IMongoDatabase Conectar()
         {
             var cliente = new MongoClient("mongodb://localhost:27017");

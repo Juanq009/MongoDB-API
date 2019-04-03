@@ -24,12 +24,12 @@ namespace WebApiMongoDB.Controllers
         }
 
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public IEnumerable<Personas> Get(int id)
+        // GET api/values/id
+        [HttpGet("{name}")]
+        public IEnumerable<Personas> Get(string name)
         {
             PersonasDal dal = new PersonasDal();
-            var persona = dal.Todos();
+            var persona = dal.Uno(name);
             return persona;
         }
 
