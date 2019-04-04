@@ -35,13 +35,13 @@ namespace WebApiMongoDB.Controllers
 
         // POST api/values
         [HttpPost]
-        // public IActionResult Post([FromBody] Personas per)
-        // {
-        //     PersonasDal dal = new PersonasDal();
-        //     var persona = dal.PostNewPerson(per);
-        //     return Ok();
+        public IActionResult Post([FromBody] NewPersonRequest per)
+        {
+            PersonaDal dal = new PersonaDal();
+            var persona = dal.PostNewPerson(per);
+            return Ok();
 
-        // }
+        }
 
         // PUT api/values/5
         [HttpPut("{id}")]
@@ -58,5 +58,10 @@ namespace WebApiMongoDB.Controllers
             var personas = dal.DeleteOnePerson(name);
 
         }
+
+
+
+
+
     }
 }
