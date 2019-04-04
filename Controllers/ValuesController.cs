@@ -16,39 +16,47 @@ namespace WebApiMongoDB.Controllers
         // GET api/values
 
         [HttpGet]
-        public IEnumerable<Personas> GetAll()
+        public IEnumerable<Persona> GetAll()
         {
-            PersonasDal dal = new PersonasDal();
-            var persona = dal.Todos();
-            return persona;
+            PersonaDal dal = new PersonaDal();
+            var peras = dal.GetAllPerson();
+            return peras;
         }
 
 
-        // GET api/values/id
+        // GET api/values/Nombre
         [HttpGet("{name}")]
-        public IEnumerable<Personas> Get(string name)
+        public IEnumerable<Persona> Get(string name)
         {
-            PersonasDal dal = new PersonasDal();
-            var persona = dal.Uno(name);
+            PersonaDal dal = new PersonaDal();
+            var persona = dal.GetOnePerson(name);
             return persona;
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        // public IActionResult Post([FromBody] Personas per)
+        // {
+        //     PersonasDal dal = new PersonasDal();
+        //     var persona = dal.PostNewPerson(per);
+        //     return Ok();
+
+        // }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE api/values/name
+        [HttpDelete("{name}")]
+        public void Delete([FromBody] string name)
         {
+            PersonaDal dal = new PersonaDal();
+            var personas = dal.DeleteOnePerson(name);
+
         }
     }
 }
