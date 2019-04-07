@@ -28,7 +28,7 @@ namespace WebApiMongoDB.SendEmail
             {
 
                 await cl.ConnectAsync("smtp.gmail.com", 587, false);
-                await cl.AuthenticateAsync("juanq009.JQ@gmail.com", "1982gonzo");// encriptar contraseña
+                await cl.AuthenticateAsync("juanq009.JQ@gmail.com", "*****");// encriptar contraseña
                 await cl.SendAsync(mes);
                 await cl.DisconnectAsync(true);
             }
