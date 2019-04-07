@@ -16,10 +16,10 @@ namespace WebApiMongoDB.Models
 
         public NewPersonRequest(string nombre, string apellido, string edad)
         {
+
             this.Nombre = nombre;
             this.Apellido = apellido;
             this.Edad = edad;
-
         }
 
     }

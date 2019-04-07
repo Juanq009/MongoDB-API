@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using WebApiMongoDB.Connections;
+using WebApiMongoDB.SendEmail;
 namespace WebApiMongoDB.Models
 {
     public class PersonaDal
     {
         static ConectionMongo con = new ConectionMongo();
+        static Contact conta = new Contact();
+
         private readonly IMongoDatabase _database;
 
         public PersonaDal()
@@ -17,7 +21,7 @@ namespace WebApiMongoDB.Models
             _database = con.Conectar();
 
         }
-        public IEnumerable<Persona> GetAllPerson()
+        public IEnumerable<Persona> GetAll()
 
         {
             var pers = _database.GetCollection<Persona>("Personas")
@@ -26,7 +30,7 @@ namespace WebApiMongoDB.Models
         }
 
 
-        public IEnumerable<Persona> GetOnePerson(string name)
+        public IEnumerable<Persona> GetOne(string name)
         {
             var persona = _database.GetCollection<Persona>("Personas")
             .Find(d => d.Nombre == name).ToListAsync();
@@ -37,12 +41,12 @@ namespace WebApiMongoDB.Models
 
 
         // delete no anda tengo q ver como se hace ....
-        public ActionResult<Persona> DeleteOnePerson(string firstname)
+        public ActionResult<Persona> DeleteOne(Persona perborr)
         {
 
 
             var collectio = _database.GetCollection<Persona>("Personas")
-                .FindOneAndDelete(per => per.Nombre == firstname);
+                .FindOneAndDelete(per => per.Nombre == perborr.Nombre && per.Apellido == perborr.Apellido);
 
             return collectio;
 
@@ -50,13 +54,21 @@ namespace WebApiMongoDB.Models
 
 
 
-        public ActionResult<NewPersonRequest> PostNewPerson(NewPersonRequest per)
+        public async Task InsertOneAsync(Persona per)
         {
             var collectio = _database.GetCollection<Persona>("Personas");
-            // collectio.InsertOne(per);
+            await collectio.InsertOneAsync(per);
+            await conta.NewMessageAsync(per);
 
+        }
 
-            return per;
+        public void UpdateOne(string id, Persona per)
+        {
+
+            var compaid = per._id.ToString();
+            var collectio = _database.GetCollection<Persona>("Personas");
+            // collectio.FindOneAndUpdate(  );
+
         }
 
     }

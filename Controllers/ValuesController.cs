@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
-
 using WebApiMongoDB.Models;
+using WebApiMongoDB.SendEmail;
 
 namespace WebApiMongoDB.Controllers
 {
@@ -15,11 +15,12 @@ namespace WebApiMongoDB.Controllers
     {
         // GET api/values
 
+
         [HttpGet]
         public IEnumerable<Persona> GetAll()
         {
             PersonaDal dal = new PersonaDal();
-            var peras = dal.GetAllPerson();
+            var peras = dal.GetAll();
             return peras;
         }
 
@@ -28,35 +29,83 @@ namespace WebApiMongoDB.Controllers
         [HttpGet("{name}")]
         public IEnumerable<Persona> Get(string name)
         {
+            // enviar email prueba
+            var mail = new Contact();
+
             PersonaDal dal = new PersonaDal();
-            var persona = dal.GetOnePerson(name);
+
+            var persona = dal.GetOne(name);
+
             return persona;
         }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] NewPersonRequest per)
+        public async Task<IActionResult> Post([FromBody] NewPersonRequest request)
         {
+            if (request.Nombre == "" || request.Apellido == "")
+            {
+
+                return BadRequest();
+            }
+
             PersonaDal dal = new PersonaDal();
-            var persona = dal.PostNewPerson(per);
+            var pe1 = new Persona();
+
+
+
+            // mapear
+            pe1.Nombre = request.Nombre;
+            pe1.Apellido = request.Apellido;
+            pe1.Edad = request.Edad;
+
+            await dal.InsertOneAsync(pe1);
+
+
+
             return Ok();
 
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult<Persona> Put(string id, [FromBody] NewPersonRequest request)
         {
 
+
+            if (request.Nombre == "" || request.Apellido == "")
+            {
+                return BadRequest();
+            }
+            var perdal = new PersonaDal();
+            var per = new Persona();
+
+            // mapeo
+            per.Nombre = request.Nombre;
+            per.Edad = request.Apellido;
+            per.Apellido = request.Edad;
+            perdal.UpdateOne(id, per);
+
+            return per;
         }
 
-        // DELETE api/values/name
-        [HttpDelete("{name}")]
-        public void Delete([FromBody] string name)
+        // DELETE api/values/
+        [HttpDelete]
+        public ActionResult<DelRequest> Delete([FromBody] DelRequest respond)
         {
+            if (respond.Nombre == "" || respond.Apellido == "")
+            {
+                return BadRequest();
+            }
             PersonaDal dal = new PersonaDal();
-            var personas = dal.DeleteOnePerson(name);
+            var per = new Persona();
+            // mapeo
+            per.Nombre = respond.Nombre;
+            per.Apellido = respond.Apellido;
+            per.Edad = "";
 
+            var personas = dal.DeleteOne(per);
+            return Ok();
         }
 
 
