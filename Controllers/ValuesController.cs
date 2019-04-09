@@ -38,14 +38,14 @@ namespace WebApiMongoDB.Controllers
 
         // GET api/values/Nombre
         [HttpGet("{name}")]
-        public IEnumerable<Persona> Get(string name)
+        public Task<Persona> Get(string name)
         {
             // enviar email prueba
 
 
             PersonaDal dal = new PersonaDal(_connection);
 
-            var persona = dal.GetOne(name);
+            var persona = dal.GetOneAsync(name);
 
             return persona;
         }
@@ -62,9 +62,6 @@ namespace WebApiMongoDB.Controllers
 
             PersonaDal dal = new PersonaDal(_connection);
             var pe1 = new Persona();
-
-
-
             // mapear
             pe1.Nombre = request.Nombre;
             pe1.Apellido = request.Apellido;
@@ -72,33 +69,25 @@ namespace WebApiMongoDB.Controllers
 
             await dal.InsertOneAsync(pe1);
             await _emailSender.NewMessageAsync(pe1);
-
-
             return Ok();
 
         }
 
         // PUT api/values/5
         // [HttpPut("{id}")]
-        // public ActionResult<Persona> Put(string id, [FromBody] NewPersonRequest request)
-        // {
+        public async Task<Persona> Put(string id, [FromBody] NewPersonRequest request)
+        {
+            var perdal = new PersonaDal(_connection);
+            var per = new Persona();
 
+            // mapeo tendria q ver para hacer el autoMapper
+            per.Nombre = request.Nombre;
+            per.Edad = request.Apellido;
+            per.Apellido = request.Edad;
+            await perdal.UpdateOneAsync(id, per);
 
-        //     if (request.Nombre == "" || request.Apellido == "")
-        //     {
-        //         return BadRequest();
-        //     }
-        //     var perdal = new PersonaDal();
-        //     var per = new Persona();
-
-        //     // mapeo
-        //     per.Nombre = request.Nombre;
-        //     per.Edad = request.Apellido;
-        //     per.Apellido = request.Edad;
-        //     perdal.UpdateOne(id, per);
-
-        //     return per;
-        // }
+            return per;
+        }
 
         // DELETE api/values/
         [HttpDelete]
@@ -116,7 +105,7 @@ namespace WebApiMongoDB.Controllers
             per.Apellido = respond.Apellido;
             per.Edad = "";
 
-            var personas = dal.DeleteOne(per);
+            var personas = dal.DeleteOneAsync(per);
             return Ok();
         }
 

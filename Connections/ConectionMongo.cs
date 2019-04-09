@@ -24,7 +24,7 @@ namespace WebApiMongoDB.Connections
             try
             {
                 var cliente = new MongoClient(_connection["Url"]);
-                var database = cliente.GetDatabase("mgGroupPrueba");
+                var database = cliente.GetDatabase(_connection["DataBaseName"]);
                 return database;
             }
             catch (System.Exception)

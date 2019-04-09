@@ -14,13 +14,7 @@ namespace WebApiMongoDB.Models
 
         public string Edad { get; set; }
 
-        public NewPersonRequest(string nombre, string apellido, string edad)
-        {
 
-            this.Nombre = nombre;
-            this.Apellido = apellido;
-            this.Edad = edad;
-        }
 
     }
 }

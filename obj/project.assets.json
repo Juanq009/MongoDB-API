@@ -13424,11 +13424,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USUARIO\\Documents\\tutorialMongo\\webapiClone\\MongoDB-API\\WebApiMongoDB.csproj",
+      "projectUniqueName": "c:\\Users\\USUARIO\\Documents\\tutorialMongo\\MongoDB-API\\WebApiMongoDB.csproj",
       "projectName": "WebApiMongoDB",
-      "projectPath": "C:\\Users\\USUARIO\\Documents\\tutorialMongo\\webapiClone\\MongoDB-API\\WebApiMongoDB.csproj",
+      "projectPath": "c:\\Users\\USUARIO\\Documents\\tutorialMongo\\MongoDB-API\\WebApiMongoDB.csproj",
       "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USUARIO\\Documents\\tutorialMongo\\webapiClone\\MongoDB-API\\obj\\",
+      "outputPath": "c:\\Users\\USUARIO\\Documents\\tutorialMongo\\MongoDB-API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

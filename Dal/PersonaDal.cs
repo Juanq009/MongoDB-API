@@ -31,25 +31,23 @@ namespace WebApiMongoDB.Models
         }
 
 
-        public IEnumerable<Persona> GetOne(string name)
+        public async Task<Persona> GetOneAsync(string name)
         {
-            var persona = _database.GetCollection<Persona>("Personas")
-            .Find(d => d.Nombre == name).ToListAsync();
-            return persona.Result;
+            var persona = _database.GetCollection<Persona>("Personas");
+            var cursor = await persona.FindAsync(d => d.Nombre == name);
+            return await cursor.FirstOrDefaultAsync();
+
         }
 
 
-
-
-        // delete no anda tengo q ver como se hace ....
-        public ActionResult<Persona> DeleteOne(Persona perborr)
+        public async Task<Persona> DeleteOneAsync(Persona perborr)
         {
 
 
-            var collectio = _database.GetCollection<Persona>("Personas")
-                .FindOneAndDelete(per => per.Nombre == perborr.Nombre && per.Apellido == perborr.Apellido);
+            var collectio = _database.GetCollection<Persona>("Personas");
+            var retorno = await collectio.FindOneAndDeleteAsync(per => per.Nombre == perborr.Nombre && per.Apellido == perborr.Apellido);
 
-            return collectio;
+            return retorno;
 
         }
 
@@ -62,14 +60,23 @@ namespace WebApiMongoDB.Models
 
         }
 
-        // public async Task UpdateOneAsync(string id, Persona per)
-        // {    var per2 = new Persona();
+        public async Task UpdateOneAsync(string id, Persona perborr)
+        {
 
-        //     var compaid = per._id.ToString();
-        //     var collectio = _database.GetCollection<Persona>("Personas");
-        //     await collectio.FindOneAndUpdateAsync(s => s._id.ToString() == id , per );
+            var collectio = _database.GetCollection<Persona>("Personas");
+            var find = collectio.FindSync(s => s._id.ToString() == id);
+            var busqe = await find.FirstOrDefaultAsync();
+            var newperson = new Persona();
 
-        // }
+            newperson._id = busqe._id;
+            newperson.Nombre = perborr.Nombre;
+            newperson.Apellido = perborr.Apellido;
+            newperson.Edad = perborr.Edad;
+
+
+            await collectio.InsertOneAsync(newperson);
+
+        }
 
     }
 }
