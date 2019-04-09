@@ -53,7 +53,7 @@ namespace WebApiMongoDB.SendEmail
             catch (System.Exception)
             {
 
-                throw;
+
             }
 
 
