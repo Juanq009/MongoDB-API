@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using MongoDB_API.Connections;
+using MongoDB_API.SendEmail;
 using WebApiMongoDB.Models;
 using WebApiMongoDB.SendEmail;
 
@@ -13,13 +15,22 @@ namespace WebApiMongoDB.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly IEmailSender _emailSender;
+        private readonly IConnectionDataBase _connection;
+
+        public ValuesController(IEmailSender emailSender, IConnectionDataBase connection)
+        {
+            _emailSender = emailSender;
+            _connection = connection;
+        }
+
         // GET api/values
 
 
         [HttpGet]
         public IEnumerable<Persona> GetAll()
         {
-            PersonaDal dal = new PersonaDal();
+            PersonaDal dal = new PersonaDal(_connection);
             var peras = dal.GetAll();
             return peras;
         }
@@ -30,9 +41,9 @@ namespace WebApiMongoDB.Controllers
         public IEnumerable<Persona> Get(string name)
         {
             // enviar email prueba
-            var mail = new Contact();
 
-            PersonaDal dal = new PersonaDal();
+
+            PersonaDal dal = new PersonaDal(_connection);
 
             var persona = dal.GetOne(name);
 
@@ -49,7 +60,7 @@ namespace WebApiMongoDB.Controllers
                 return BadRequest();
             }
 
-            PersonaDal dal = new PersonaDal();
+            PersonaDal dal = new PersonaDal(_connection);
             var pe1 = new Persona();
 
 
@@ -60,7 +71,7 @@ namespace WebApiMongoDB.Controllers
             pe1.Edad = request.Edad;
 
             await dal.InsertOneAsync(pe1);
-
+            await _emailSender.NewMessageAsync(pe1);
 
 
             return Ok();
@@ -98,7 +109,7 @@ namespace WebApiMongoDB.Controllers
             {
                 return BadRequest();
             }
-            PersonaDal dal = new PersonaDal();
+            PersonaDal dal = new PersonaDal(_connection);
             var per = new Persona();
             // mapeo
             per.Nombre = respond.Nombre;

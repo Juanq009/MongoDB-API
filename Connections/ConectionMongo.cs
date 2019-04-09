@@ -1,12 +1,17 @@
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-
+using MongoDB_API.Connections;
 
 namespace WebApiMongoDB.Connections
 {
-    public class ConectionMongo
+    public class ConectionMongo : IConnectionDataBase
     {
-        public ConectionMongo()
+        private readonly IConfiguration _connection;
+
+
+        public ConectionMongo(IConfiguration connection)
         {
+            _connection = connection;
         }
 
         public string Url { get; set; }
@@ -18,7 +23,7 @@ namespace WebApiMongoDB.Connections
         {
             try
             {
-                var cliente = new MongoClient("mongodb://localhost:27017");
+                var cliente = new MongoClient(_connection["Url"]);
                 var database = cliente.GetDatabase("mgGroupPrueba");
                 return database;
             }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB_API.Connections;
 using Newtonsoft.Json;
 using WebApiMongoDB.Connections;
 using WebApiMongoDB.SendEmail;
@@ -12,14 +13,13 @@ namespace WebApiMongoDB.Models
 {
     public class PersonaDal
     {
-        static ConectionMongo con = new ConectionMongo();
-        static Contact conta = new Contact();
-
+        private readonly IConnectionDataBase _connection;
         private readonly IMongoDatabase _database;
 
-        public PersonaDal()
+        public PersonaDal(IConnectionDataBase connection)
         {
-            _database = con.Conectar();
+            _connection = connection;
+            _database = _connection.Conectar();
 
         }
         public IEnumerable<Persona> GetAll()
@@ -59,7 +59,6 @@ namespace WebApiMongoDB.Models
         {
             var collectio = _database.GetCollection<Persona>("Personas");
             await collectio.InsertOneAsync(per);
-            await conta.NewMessageAsync(per);
 
         }
 

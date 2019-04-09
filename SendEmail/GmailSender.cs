@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 
+using MongoDB_API.SendEmail;
+using Microsoft.Extensions.Configuration;
+
 namespace WebApiMongoDB.SendEmail
 {
-    public class Contact
+    public class GmailSender : IEmailSender
     {
+        private readonly IConfiguration _config;
 
-        public string MyEmail { get; set; }
-        public string Host { get; set; }
-        public int Puerto { get; set; }
-        public string MyPass { get; set; }
-
-        public Contact()
+        public GmailSender(IConfiguration config)
         {
+            _config = config;
         }
 
         public async Task NewMessageAsync(Persona per)
@@ -28,8 +28,8 @@ namespace WebApiMongoDB.SendEmail
 
 
             var mes = new MimeMessage();
-            mes.From.Add(new MailboxAddress("Test Project", "juanq009.jq@gmail.com"));
-            mes.To.Add(new MailboxAddress(per.Nombre, "juanq009.jq@gmail.com"));  // enviar a varios contactos 
+            mes.From.Add(new MailboxAddress("Test Project", _config["Mymail"]));
+            mes.To.Add(new MailboxAddress(per.Nombre, _config["Mymail"]));  // enviar a varios contactos 
             mes.To.Add(new MailboxAddress(per.Nombre, "flazaro@mg-group.com.ar")); // tendria q empezar a cargar email de las personas en la DB
             mes.Subject = "Se a cargado un nuevo miebro a la coleccion ";
             mes.Body = new TextPart("plain")
@@ -44,7 +44,7 @@ namespace WebApiMongoDB.SendEmail
                 using (var cl = new SmtpClient())
                 {
                     await cl.ConnectAsync("smtp.gmail.com", 587, false);
-                    await cl.AuthenticateAsync("juanq009.jq@gmail.com", "1982gonzo");// encriptar contraseña
+                    await cl.AuthenticateAsync(_config["Mymail"], "1982gonzo");// encriptar contraseña
                     await cl.SendAsync(mes);
                     await cl.DisconnectAsync(true);
                 }

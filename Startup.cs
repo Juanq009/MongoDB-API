@@ -11,8 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoDB_API.Connections;
+using MongoDB_API.SendEmail;
+using WebApiMongoDB.Connections;
 using WebApiMongoDB.Models;
-
+using WebApiMongoDB.SendEmail;
 
 namespace WebApiMongoDB
 {
@@ -32,6 +35,10 @@ namespace WebApiMongoDB
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IConnectionDataBase, ConectionMongo>(); // servicio mongo 
+
+            services.AddSingleton<IEmailSender, GmailSender>(); // servicio gmail
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
