@@ -68,26 +68,26 @@ namespace WebApiMongoDB.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public ActionResult<Persona> Put(string id, [FromBody] NewPersonRequest request)
-        {
+        // [HttpPut("{id}")]
+        // public ActionResult<Persona> Put(string id, [FromBody] NewPersonRequest request)
+        // {
 
 
-            if (request.Nombre == "" || request.Apellido == "")
-            {
-                return BadRequest();
-            }
-            var perdal = new PersonaDal();
-            var per = new Persona();
+        //     if (request.Nombre == "" || request.Apellido == "")
+        //     {
+        //         return BadRequest();
+        //     }
+        //     var perdal = new PersonaDal();
+        //     var per = new Persona();
 
-            // mapeo
-            per.Nombre = request.Nombre;
-            per.Edad = request.Apellido;
-            per.Apellido = request.Edad;
-            perdal.UpdateOne(id, per);
+        //     // mapeo
+        //     per.Nombre = request.Nombre;
+        //     per.Edad = request.Apellido;
+        //     per.Apellido = request.Edad;
+        //     perdal.UpdateOne(id, per);
 
-            return per;
-        }
+        //     return per;
+        // }
 
         // DELETE api/values/
         [HttpDelete]

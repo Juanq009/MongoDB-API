@@ -63,14 +63,14 @@ namespace WebApiMongoDB.Models
 
         }
 
-        public void UpdateOne(string id, Persona per)
-        {
+        // public async Task UpdateOneAsync(string id, Persona per)
+        // {    var per2 = new Persona();
 
-            var compaid = per._id.ToString();
-            var collectio = _database.GetCollection<Persona>("Personas");
-            // collectio.FindOneAndUpdate(  );
+        //     var compaid = per._id.ToString();
+        //     var collectio = _database.GetCollection<Persona>("Personas");
+        //     await collectio.FindOneAndUpdateAsync(s => s._id.ToString() == id , per );
 
-        }
+        // }
 
     }
 }
