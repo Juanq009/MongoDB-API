@@ -93,6 +93,7 @@ namespace WebApiMongoDB.Controllers
         [HttpDelete]
         public ActionResult<DelRequest> Delete([FromBody] DelRequest respond)
         {
+
             if (respond.Nombre == "" || respond.Apellido == "")
             {
                 return BadRequest();
@@ -107,10 +108,6 @@ namespace WebApiMongoDB.Controllers
             var personas = dal.DeleteOne(per);
             return Ok();
         }
-
-
-
-
 
     }
 }
