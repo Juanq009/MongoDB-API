@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using MongoDB_API.Connections;
@@ -14,10 +15,6 @@ namespace WebApiMongoDB.Connections
             _connection = connection;
         }
 
-        public string Url { get; set; }
-        public string DbName { get; set; }
-
-
         public IMongoDatabase Conectar()
 
         {
@@ -25,13 +22,19 @@ namespace WebApiMongoDB.Connections
             {
                 var cliente = new MongoClient(_connection["Url"]);
                 var database = cliente.GetDatabase(_connection["DataBaseName"]);
+
                 return database;
             }
-            catch (System.Exception)
+            catch (MongoConnectionClosedException e)
             {
 
-                throw;
+                throw e;
             }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+
         }
     }
 }

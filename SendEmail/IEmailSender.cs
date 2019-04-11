@@ -5,6 +5,6 @@ namespace MongoDB_API.SendEmail
 {
     public interface IEmailSender
     {
-        Task NewMessageAsync(Persona per);
+        Task NewMessageAsync(string mensaje, Persona per);
     }
 }

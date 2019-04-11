@@ -8,6 +8,7 @@ using MongoDB.Bson;
 
 using MongoDB_API.SendEmail;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace WebApiMongoDB.SendEmail
 {
@@ -20,7 +21,7 @@ namespace WebApiMongoDB.SendEmail
             _config = config;
         }
 
-        public async Task NewMessageAsync(Persona per)
+        public async Task NewMessageAsync(string mensaje, Persona per)
 
         {
             // class Config tendria q configurar valores 
@@ -30,8 +31,8 @@ namespace WebApiMongoDB.SendEmail
             var mes = new MimeMessage();
             mes.From.Add(new MailboxAddress("Test Project", _config["Mymail"]));
             mes.To.Add(new MailboxAddress(per.Nombre, _config["Mymail"]));  // enviar a varios contactos 
-            // mes.To.Add(new MailboxAddress(per.Nombre, "flazaro@mg-group.com.ar")); // tendria q empezar a cargar email de las personas en la DB
-            mes.Subject = "Se a cargado un nuevo miebro a la coleccion ";
+            mes.To.Add(new MailboxAddress(per.Nombre, "flazaro@mg-group.com.ar")); // tendria q empezar a cargar email de las personas en la DB
+            mes.Subject = mensaje;
             mes.Body = new TextPart("plain")
             {
                 Text = per.ToJson() // modificar forma en la que llegan los email con algun template
@@ -50,12 +51,16 @@ namespace WebApiMongoDB.SendEmail
                 }
 
             }
-            catch (System.Exception)
+            // 
+            catch (MailKit.Security.AuthenticationException UserNameOrPassIncorrect)
             {
 
-
+                throw UserNameOrPassIncorrect;
             }
-
+            catch (System.Net.Sockets.SocketException e) // host incorrecto
+            {
+                throw e;
+            }
 
         }
     }

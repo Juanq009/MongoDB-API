@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB_API.Connections;
 using MongoDB_API.SendEmail;
@@ -53,7 +54,9 @@ namespace WebApiMongoDB.Controllers
         // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] NewPersonRequest request)
+
         {
+            var mensaje = "Se a agregado un nuevo elemento a la colleccion ";
             if (request.Nombre == "" || request.Apellido == "")
             {
 
@@ -68,14 +71,14 @@ namespace WebApiMongoDB.Controllers
             pe1.Edad = request.Edad;
 
             await dal.InsertOneAsync(pe1);
-            await _emailSender.NewMessageAsync(pe1);
+            await _emailSender.NewMessageAsync(mensaje, pe1);
             return Ok();
 
         }
 
-        // PUT api/values/5
-        // [HttpPut("{id}")]
-        public async Task<Persona> Put(string id, [FromBody] NewPersonRequest request)
+        // PUT api/values/id
+        [HttpPut("{id}")]
+        public Persona Put(string id, [FromBody] NewPersonRequest request)
         {
             var perdal = new PersonaDal(_connection);
             var per = new Persona();
@@ -84,7 +87,8 @@ namespace WebApiMongoDB.Controllers
             per.Nombre = request.Nombre;
             per.Edad = request.Apellido;
             per.Apellido = request.Edad;
-            await perdal.UpdateOneAsync(id, per);
+
+            perdal.UpdateOne(id, per);
 
             return per;
         }
@@ -93,6 +97,7 @@ namespace WebApiMongoDB.Controllers
         [HttpDelete]
         public ActionResult<DelRequest> Delete([FromBody] DelRequest respond)
         {
+            var mensaje = "Se a borrado el elemento de la colleccion ";
 
             if (respond.Nombre == "" || respond.Apellido == "")
             {
@@ -106,6 +111,7 @@ namespace WebApiMongoDB.Controllers
             per.Edad = "";
 
             var personas = dal.DeleteOneAsync(per);
+            _emailSender.NewMessageAsync(mensaje, per);
             return Ok();
         }
 

@@ -60,23 +60,21 @@ namespace WebApiMongoDB.Models
 
         }
 
-        public async Task UpdateOneAsync(string id, Persona perborr)
+        public void UpdateOne(string id, Persona per)
         {
 
-            var collectio = _database.GetCollection<Persona>("Personas");
-            var find = collectio.FindSync(s => s._id.ToString() == id);
-            var busqe = await find.FirstOrDefaultAsync();
-            var newperson = new Persona();
+            try
+            {
+                var collection = _database.GetCollection<Persona>("Personas");
+                // collection.FindOneAndReplace(s => s.Nombre == "Franco", per);
+            }
+            catch (System.Exception error)
+            {
 
-            newperson._id = busqe._id;
-            newperson.Nombre = perborr.Nombre;
-            newperson.Apellido = perborr.Apellido;
-            newperson.Edad = perborr.Edad;
+                throw error;
+            }
 
-
-            await collectio.InsertOneAsync(newperson);
 
         }
-
     }
 }
