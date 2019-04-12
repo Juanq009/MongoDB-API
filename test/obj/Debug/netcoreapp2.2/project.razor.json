@@ -1,0 +1,14 @@
+{
+  "ProjectFilePath": "c:\\Users\\USUARIO\\Documents\\tutorialMongo\\MongoDB-API\\test\\MongoDB-API.csproj",
+  "TargetFramework": "netcoreapp2.2",
+  "TagHelpers": [],
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\MongoDB-API.deps.json
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\MongoDB-API.runtimeconfig.json
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\MongoDB-API.runtimeconfig.dev.json
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\MongoDB-API.dll
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\MongoDB-API.pdb
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\WebApiMongoDB.dll
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\bin\Debug\netcoreapp2.2\WebApiMongoDB.pdb
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\obj\Debug\netcoreapp2.2\MongoDB-API.csprojAssemblyReference.cache
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\obj\Debug\netcoreapp2.2\MongoDB-API.csproj.CoreCompileInputs.cache
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\obj\Debug\netcoreapp2.2\MongoDB-API.AssemblyInfoInputs.cache
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\obj\Debug\netcoreapp2.2\MongoDB-API.AssemblyInfo.cs
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\obj\Debug\netcoreapp2.2\MongoDB-API.csproj.CopyComplete
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\obj\Debug\netcoreapp2.2\MongoDB-API.dll
+c:\Users\USUARIO\Documents\tutorialMongo\MongoDB-API\test\obj\Debug\netcoreapp2.2\MongoDB-API.pdb
