@@ -50,22 +50,30 @@ namespace WebApiMongoDB.SendEmail
                 }
                 catch (SocketException e)
                 {
-                    throw e;
+                    Console.WriteLine("Stack trace {0}", e.StackTrace);
+
+                    throw;
                 }
                 catch (SmtpCommandException ex)
                 {
                     Console.WriteLine("Error al intentar conectar: {0}", ex.Message);
                     Console.WriteLine("\tStatusCode: {0}", ex.StatusCode);
+                    Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                     return;
                 }
                 catch (SmtpProtocolException ex)
                 {
                     Console.WriteLine("Error de protocolo al intentar conectarse: {0}", ex.Message);
+                    Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                     return;
                 }
                 catch (System.Exception e)
                 {
                     Console.WriteLine("Error desconocido: {0}", e.Message);
+                    Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                     throw;
                 }
                 if (cl.Capabilities.HasFlag(SmtpCapabilities.Authentication))
@@ -74,20 +82,26 @@ namespace WebApiMongoDB.SendEmail
                     {
                         await cl.AuthenticateAsync(_config["Mymail"], _config["Mypass"]);
                     }
-                    catch (AuthenticationException)
+                    catch (AuthenticationException e)
                     {
                         Console.WriteLine("Usuario o contraseña invalido.");
+                        Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                         return;
                     }
                     catch (SmtpCommandException ex)
                     {
                         Console.WriteLine("Error al intentar autenticar: {0}", ex.Message);
                         Console.WriteLine("\tStatusCode: {0}", ex.StatusCode);
+                        Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                         return;
                     }
                     catch (SmtpProtocolException ex)
                     {
                         Console.WriteLine("Error de protocolo al intentar autenticar: {0}", ex.Message);
+                        Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                         return;
                     }
                 }
@@ -100,23 +114,33 @@ namespace WebApiMongoDB.SendEmail
                 {
                     Console.WriteLine("Error al enviar el mensaje: {0}", ex.Message);
                     Console.WriteLine("\tStatusCode: {0}", ex.StatusCode);
+                    Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
 
                     switch (ex.ErrorCode)
                     {
                         case SmtpErrorCode.RecipientNotAccepted:
                             Console.WriteLine("\tRecipient not accepted: {0}", ex.Mailbox);
+                            Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                             break;
                         case SmtpErrorCode.SenderNotAccepted:
                             Console.WriteLine("\tSender not accepted: {0}", ex.Mailbox);
+                            Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                             break;
                         case SmtpErrorCode.MessageNotAccepted:
                             Console.WriteLine("\tMessage not accepted.");
+                            Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                             break;
                     }
                 }
                 catch (SmtpProtocolException ex)
                 {
                     Console.WriteLine("Error de protocolo al intentar autenticar: {0}", ex.Message);
+                    Console.WriteLine("Stack trace {0}", ex.StackTrace);
+
                 }
 
                 await cl.DisconnectAsync(true);

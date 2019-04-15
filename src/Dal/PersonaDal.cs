@@ -39,12 +39,16 @@ namespace WebApiMongoDB.Models
             catch (System.AggregateException e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                 throw e;
 
             }
             catch (System.Exception e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                 throw e;
             }
 
@@ -62,6 +66,8 @@ namespace WebApiMongoDB.Models
             catch (System.Exception e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                 throw e;
             }
 
@@ -83,6 +89,8 @@ namespace WebApiMongoDB.Models
             catch (System.Exception e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                 throw e;
             }
 
@@ -101,6 +109,8 @@ namespace WebApiMongoDB.Models
             catch (System.Exception e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                 throw e;
             }
         }
@@ -116,6 +126,8 @@ namespace WebApiMongoDB.Models
             catch (System.Exception e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+
                 throw e;
             }
 

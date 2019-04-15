@@ -29,12 +29,15 @@ namespace WebApiMongoDB.Connections
             catch (MongoConnectionClosedException e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
-                throw e;
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+                throw;
             }
             catch (System.Exception e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
-                throw e;
+                Console.WriteLine("Stack trace {0}", e.StackTrace);
+
+                throw;
             }
 
 
