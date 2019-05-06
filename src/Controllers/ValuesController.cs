@@ -11,18 +11,15 @@ using MongoDB_API.SendEmail;
 using WebApiMongoDB.Models;
 using WebApiMongoDB.SendEmail;
 
-namespace WebApiMongoDB.Controllers
-{
+namespace WebApiMongoDB.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
-    {
+    public class ValuesController: ControllerBase {
         private readonly IEmailSender _emailSender;
 
         private readonly IDalPerson _personadal;
 
-        public ValuesController(IEmailSender emailSender, IDalPerson personaldal)
-        {
+        public ValuesController(IEmailSender emailSender, IDalPerson personaldal) {
             _emailSender = emailSender;
             _personadal = personaldal;
         }
@@ -31,8 +28,7 @@ namespace WebApiMongoDB.Controllers
 
 
         [HttpGet]
-        public IEnumerable<Persona> GetAll()
-        {
+        public IEnumerable <Persona> GetAll() {
 
             var peras = _personadal.GetAll();
             return peras;
@@ -41,8 +37,7 @@ namespace WebApiMongoDB.Controllers
 
         // GET api/values/Nombre
         [HttpGet("{name}")]
-        public Task<Persona> Get(string name)
-        {
+        public Task <Persona> Get(string name) {
             // enviar email prueba
 
             var persona = _personadal.GetOneAsync(name);
@@ -52,19 +47,18 @@ namespace WebApiMongoDB.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] NewPersonRequest request)
+        public async Task <IActionResult> Post([FromBody] NewPersonRequest request)
 
         {
             var mensaje = "Se a agregado un nuevo elemento a la colleccion ";
-            if (request.Nombre == "" || request.Apellido == "")
-            {
+            if (request.Nombre == "" || request.Apellido == "") {
 
                 return BadRequest();
             }
 
 
             var pe1 = new Persona();
-            // mapear
+            // mapear 
             pe1.Nombre = request.Nombre;
             pe1.Apellido = request.Apellido;
             pe1.Edad = request.Edad;
@@ -78,8 +72,7 @@ namespace WebApiMongoDB.Controllers
 
         // PUT api/values/id
         [HttpPut("{id}")]
-        public Persona Put(string id, [FromBody] NewPersonRequest request)
-        {
+        public Persona Put(string id, [FromBody] NewPersonRequest request) {
 
             var per = new Persona();
 
@@ -95,12 +88,10 @@ namespace WebApiMongoDB.Controllers
 
         // DELETE api/values/
         [HttpDelete]
-        public ActionResult<DelRequest> Delete([FromBody] DelRequest respond)
-        {
+        public ActionResult <DelRequest> Delete([FromBody] DelRequest respond) {
             var mensaje = "Se a borrado el elemento de la colleccion ";
 
-            if (respond.Nombre == "" || respond.Apellido == "")
-            {
+            if (respond.Nombre == "" || respond.Apellido == "") {
                 return BadRequest();
             }
 

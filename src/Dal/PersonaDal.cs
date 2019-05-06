@@ -33,6 +33,7 @@ namespace WebApiMongoDB.Models
             {
                 var pers = _database.GetCollection<Persona>("Personas")
                        .Find(new BsonDocument()).ToListAsync();
+                       Console.WriteLine("devuelve una persona ");
                 return pers.Result;
 
             }
